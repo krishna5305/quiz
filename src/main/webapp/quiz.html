@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <h2>Quiz on Indian Laws</h2>
+    <form id="quizForm">
+        <div>
+            <p>1. What is the primary legislation governing contracts in India?</p>
+            <input type="radio" name="question1" value="Indian Contract Act" required> Indian Contract Act<br>
+            <input type="radio" name="question1" value="Transfer of Property Act"> Transfer of Property Act<br>
+        </div>
+        <div>
+            <p>2. Which article of the Indian Constitution guarantees the right to equality?</p>
+            <input type="radio" name="question2" value="Article 14" required> Article 14<br>
+            <input type="radio" name="question2" value="Article 21"> Article 21<br>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+    document.getElementById("quizForm").onsubmit = function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        let score = 0;
+        const answers = {
+            question1: "Indian Contract Act",
+            question2: "Article 14"
+        };
+
+        // Calculate score
+        if (document.querySelector('input[name="question1"]:checked').value === answers.question1) {
+            score++;
+        }
+        if (document.querySelector('input[name="question2"]:checked').value === answers.question2) {
+            score++;
+        }
+
+        // Display score
+        document.getElementById("result").innerText = "Your score: " + score;
+
+        // Submit score to the server
+        const username = "YourUsername"; // Replace with actual username or fetch dynamically
+        const scoreData = { username: username, score: score };
+
+        // Change the fetch to use the servlet endpoint
+        fetch('submitScore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(scoreData) // Send data in URL encoded format
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log(data); // Handle response from server
+            // Optionally display the response on the page
+            document.getElementById("result").innerText += "\n" + data;
+        })
+        .catch(error => console.error('Error:', error));
+    };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url('quizboy.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 100vh;">
+    <h2>Login to Your Account</h2>
+    <form id="loginForm" action="login" method="POST"> <!-- Sends to LoginServlet -->
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+    <p><b>Don't have an account?</b> <a href="index.html">Register Here</a></p>
+</body>
+</html>
